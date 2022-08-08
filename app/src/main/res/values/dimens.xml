@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tv_user_login">32sp</dimen>
+    <dimen name="tv_item_user_login">32sp</dimen>
+</resources>
