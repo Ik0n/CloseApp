@@ -8,4 +8,6 @@
     <string name="button_2">button 2</string>
     <string name="button_label_3">button label 3</string>
     <string name="button_3">button 3</string>
+    <string name="tv_tools_user_login">Same Login</string>
+    <string name="tv_item_tools_user_login">Fish</string>
 </resources>

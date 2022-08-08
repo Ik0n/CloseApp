@@ -1,7 +1,6 @@
 package ru.geekbrains.closeapp.main
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -9,8 +8,6 @@ import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.R
 import ru.geekbrains.closeapp.core.OnBackPressedListener
 import ru.geekbrains.closeapp.databinding.ActivityMainBinding
-import ru.geekbrains.closeapp.model.GithubUser
-import ru.geekbrains.closeapp.repository.impl.GithubRepositoryImpl
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 

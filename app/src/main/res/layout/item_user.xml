@@ -10,11 +10,11 @@
         android:id="@+id/tvUserLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="32sp"
+        android:textSize="@dimen/tv_item_user_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Fish" />
+        tools:text="@string/tv_item_tools_user_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
