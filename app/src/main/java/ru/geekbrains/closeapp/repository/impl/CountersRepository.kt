@@ -1,6 +1,6 @@
-package ru.geekbrains.closeapp
+package ru.geekbrains.closeapp.repository.impl
 
-class CountersModel {
+class CountersRepository()  {
     private val counters = mutableListOf(0, 0, 0)
 
     fun getCounters() = counters
