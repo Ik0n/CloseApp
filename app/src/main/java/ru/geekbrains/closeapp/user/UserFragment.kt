@@ -1,6 +1,7 @@
 package ru.geekbrains.closeapp.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +22,19 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
             return UserFragment()
         }
     }
-
     private lateinit var viewBinding: FragmentUserListBinding
-    private val adapter = UserAdapter()
 
     private val presenter : UserPresenter by moxyPresenter {
         UserPresenter(GithubRepositoryImpl(), GeekBrainsApp.instance.router)
     }
+
+    private val adapter = UserAdapter(object : UserAdapter.OnItemViewClick {
+        override fun onItemViewClick(user: GithubUser) {
+            presenter.openDetailsUser(user)
+        }
+    })
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

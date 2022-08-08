@@ -15,4 +15,14 @@ class GithubRepositoryImpl : GithubRepository {
     override fun getUsers() : List<GithubUser> {
         return repositories
     }
+
+    override fun getUser(): GithubUser {
+        return repositories[0]
+    }
+
+    override fun getUser(id: Int): GithubUser {
+        return repositories[id]
+    }
+
+
 }
