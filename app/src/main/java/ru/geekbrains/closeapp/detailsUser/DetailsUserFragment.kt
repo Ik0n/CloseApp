@@ -42,7 +42,7 @@ class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPress
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        githubUser = arguments?.getParcelable<GithubUser>(GITHUB_USER) ?: GithubUser("error")
+        githubUser = arguments?.getParcelable(GITHUB_USER) ?: GithubUser(0, "none")
     }
 
     override fun initUser(user: GithubUser) {

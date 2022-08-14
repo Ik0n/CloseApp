@@ -8,4 +8,7 @@ import ru.geekbrains.closeapp.model.GithubUser
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface UserView : MvpView {
     fun initList(list: List<GithubUser>)
+    fun showLoading()
+    fun hideLoading()
+    fun showErrorToast()
 }
