@@ -1,8 +1,11 @@
 package ru.geekbrains.closeapp
 
 import android.app.Application
+import android.util.Log
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.exceptions.UndeliverableException
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
 
 class GeekBrainsApp : Application() {
 
@@ -18,5 +21,10 @@ class GeekBrainsApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        RxJavaPlugins.setErrorHandler {
+            if (it is UndeliverableException) {
+                Log.e("1", it.message.toString())
+            }
+        }
     }
 }

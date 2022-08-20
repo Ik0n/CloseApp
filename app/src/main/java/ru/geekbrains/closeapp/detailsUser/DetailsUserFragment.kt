@@ -9,25 +9,37 @@ import moxy.ktx.moxyPresenter
 import ru.geekbrains.closeapp.GITHUB_USER
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.core.OnBackPressedListener
+import ru.geekbrains.closeapp.core.network.NetworkProvider
+import ru.geekbrains.closeapp.core.network.UsersApi
+import ru.geekbrains.closeapp.core.utils.loadImage
+import ru.geekbrains.closeapp.core.utils.makeGone
+import ru.geekbrains.closeapp.core.utils.makeVisible
 import ru.geekbrains.closeapp.databinding.FragmentDetailsUserBinding
 import ru.geekbrains.closeapp.model.GithubUser
 import ru.geekbrains.closeapp.repository.impl.GithubRepositoryImpl
 
+
 class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPressedListener {
 
     companion object {
-        fun getInstance(bundle: Bundle) : DetailsUserFragment {
+        private const val ARG_LOGIN = "ARG_LOGIN"
+
+        fun getInstance(login : String) : DetailsUserFragment {
             return DetailsUserFragment().apply {
-                arguments = bundle
+                arguments = Bundle().apply {
+                    putString(ARG_LOGIN, login)
+                }
             }
         }
     }
 
-    private lateinit var viewBinding: FragmentDetailsUserBinding
-    private lateinit var githubUser: GithubUser
+    private var viewBinding: FragmentDetailsUserBinding? = null
 
     private val presenter : DetailsUserPresenter by moxyPresenter {
-        DetailsUserPresenter(GithubRepositoryImpl(), GeekBrainsApp.instance.router)
+        DetailsUserPresenter(
+            GithubRepositoryImpl(NetworkProvider.usersApi),
+            GeekBrainsApp.instance.router
+        )
     }
 
     override fun onCreateView(
@@ -42,13 +54,37 @@ class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPress
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        githubUser = arguments?.getParcelable(GITHUB_USER) ?: GithubUser(0, "none")
+        arguments?.getString(ARG_LOGIN)?.let {
+            presenter.loadUser(it)
+        }
     }
 
     override fun initUser(user: GithubUser) {
-        with(viewBinding) {
-            tvUserLogin.text = githubUser.login
+        viewBinding?.apply {
+            tvUserLogin.text = user.login
+            ivUserAvatar.loadImage(user.avatarUrl)
         }
+    }
+
+    override fun showLoading() {
+        viewBinding?.apply {
+            tvUserLogin.makeGone()
+            ivUserAvatar.makeGone()
+            progress.makeVisible()
+        }
+    }
+
+    override fun hideLoading() {
+        viewBinding?.apply {
+            tvUserLogin.makeVisible()
+            ivUserAvatar.makeVisible()
+            progress.makeGone()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
     }
 
     override fun onBackPressed() = presenter.onBackPressed()

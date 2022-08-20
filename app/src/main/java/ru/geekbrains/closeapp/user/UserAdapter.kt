@@ -1,4 +1,4 @@
-package ru.geekbrains.closeapp.main
+package ru.geekbrains.closeapp.user
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,16 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.geekbrains.closeapp.R
+import ru.geekbrains.closeapp.core.utils.loadImage
+import ru.geekbrains.closeapp.databinding.ItemUserBinding
 import ru.geekbrains.closeapp.model.GithubUser
+
+typealias OnItemViewClick = (login: String) -> Unit
 
 class UserAdapter(
     private var onItemViewClick: OnItemViewClick
 ) : RecyclerView.Adapter<UserAdapter.GithubUserViewHolder>() {
-
-    interface OnItemViewClick {
-        fun onItemViewClick(user: GithubUser)
-    }
 
     var users: List<GithubUser> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -25,7 +26,10 @@ class UserAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GithubUserViewHolder {
-        return GithubUserViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false))
+        val binding = ItemUserBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return GithubUserViewHolder(binding, onItemViewClick)
     }
 
     override fun onBindViewHolder(holder: GithubUserViewHolder, position: Int) {
@@ -34,16 +38,16 @@ class UserAdapter(
 
     override fun getItemCount() = users.size
 
-    inner class GithubUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GithubUserViewHolder(
+        private val binding: ItemUserBinding,
+        private val onItemViewClick: OnItemViewClick
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val tvLogin by lazy {
-            itemView.findViewById<TextView>(R.id.tvUserLogin)
-        }
-
-        fun bind(item : GithubUser) {
-            tvLogin.text = item.login
-            itemView.apply {
-                setOnClickListener { onItemViewClick.onItemViewClick(item) }
+        fun bind(item: GithubUser) = with(binding) {
+            tvUserLogin.text = item.login
+            ivUserAvatar.loadImage(item.avatarUrl)
+            root.setOnClickListener {
+                onItemViewClick.invoke(item.login)
             }
         }
     }

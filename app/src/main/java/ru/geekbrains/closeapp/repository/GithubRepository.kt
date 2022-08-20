@@ -6,5 +6,5 @@ import ru.geekbrains.closeapp.model.GithubUser
 interface GithubRepository {
     fun getUsers() : Single<List<GithubUser>>
     fun getUser() : GithubUser
-    fun getUser(id : Int) : GithubUser
+    fun getUserByLogin(login : String) : Single<GithubUser>
 }
