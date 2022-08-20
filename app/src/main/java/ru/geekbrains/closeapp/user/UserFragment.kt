@@ -55,7 +55,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
     }
 
     override fun initList(list: List<GithubUser>) {
-        adapter?.users = list
+        adapter.users = list
     }
 
     override fun showLoading() = with(viewBinding) {

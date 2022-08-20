@@ -11,6 +11,9 @@ object NetworkProvider {
     val usersApi by lazy {
         createRetrofit().create(UsersApi::class.java)
     }
+    val reposApi by lazy {
+        createRetrofit().create(RepoApi::class.java)
+    }
 
     private fun createGsonFactory() = GsonBuilder()
         .excludeFieldsWithoutExposeAnnotation()
