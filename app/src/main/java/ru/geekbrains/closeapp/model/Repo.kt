@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class Repo(
     @Expose
     @SerializedName("id")
-    val id: Int,
+    val id: Long,
     @Expose
     @SerializedName("name")
     val name: String,

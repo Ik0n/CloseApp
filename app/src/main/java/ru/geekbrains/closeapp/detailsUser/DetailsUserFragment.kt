@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.closeapp.ARG_LOGIN
-import ru.geekbrains.closeapp.GITHUB_USER
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.R
 import ru.geekbrains.closeapp.core.OnBackPressedListener
+import ru.geekbrains.closeapp.core.database.GithubAppDatabase
+import ru.geekbrains.closeapp.core.database.GithubAppDatabase_Impl
+import ru.geekbrains.closeapp.core.database.UserDAO
 import ru.geekbrains.closeapp.core.network.NetworkProvider
-import ru.geekbrains.closeapp.core.network.UsersApi
 import ru.geekbrains.closeapp.core.utils.loadImage
 import ru.geekbrains.closeapp.core.utils.makeGone
 import ru.geekbrains.closeapp.core.utils.makeVisible
@@ -24,10 +24,8 @@ import ru.geekbrains.closeapp.databinding.FragmentDetailsUserBinding
 import ru.geekbrains.closeapp.model.GithubUser
 import ru.geekbrains.closeapp.model.Repo
 import ru.geekbrains.closeapp.repo.RepoAdapter
-import ru.geekbrains.closeapp.repo.RepoPresenter
 import ru.geekbrains.closeapp.repository.impl.GithubRepoRepositoryImpl
-import ru.geekbrains.closeapp.repository.impl.GithubRepositoryImpl
-import ru.geekbrains.closeapp.user.UserAdapter
+import ru.geekbrains.closeapp.repository.impl.GithubUserRepositoryImpl
 
 
 class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPressedListener {
@@ -46,7 +44,7 @@ class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPress
 
     private val presenter : DetailsUserPresenter by moxyPresenter {
         DetailsUserPresenter(
-            GithubRepositoryImpl(NetworkProvider.usersApi),
+            GithubUserRepositoryImpl(NetworkProvider.usersApi, GeekBrainsApp.instance.database.UserDao(), GeekBrainsApp.instance.getConnectStatus()),
             GithubRepoRepositoryImpl(NetworkProvider.reposApi),
             GeekBrainsApp.instance.router
         )

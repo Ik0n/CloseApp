@@ -13,12 +13,8 @@ import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.core.OnBackPressedListener
 import ru.geekbrains.closeapp.core.network.NetworkProvider
 import ru.geekbrains.closeapp.databinding.FragmentDetailsRepoBinding
-import ru.geekbrains.closeapp.databinding.FragmentDetailsUserBinding
-import ru.geekbrains.closeapp.detailsUser.DetailsUserFragment
-import ru.geekbrains.closeapp.detailsUser.DetailsUserPresenter
 import ru.geekbrains.closeapp.model.Repo
 import ru.geekbrains.closeapp.repository.impl.GithubRepoRepositoryImpl
-import ru.geekbrains.closeapp.repository.impl.GithubRepositoryImpl
 
 class RepoFragment : MvpAppCompatFragment(), RepoView, OnBackPressedListener {
 
