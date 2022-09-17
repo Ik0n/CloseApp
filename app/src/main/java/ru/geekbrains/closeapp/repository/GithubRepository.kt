@@ -7,4 +7,5 @@ interface GithubRepository {
     fun getUsers() : Single<List<GithubUser>>
     fun getUser() : GithubUser
     fun getUserByLogin(login : String) : Single<GithubUser>
+    fun getUserWithRepos(login: String): Single<GithubUser>
 }

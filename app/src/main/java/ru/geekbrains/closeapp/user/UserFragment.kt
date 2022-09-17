@@ -15,7 +15,7 @@ import ru.geekbrains.closeapp.core.utils.makeGone
 import ru.geekbrains.closeapp.core.utils.makeVisible
 import ru.geekbrains.closeapp.databinding.FragmentUserListBinding
 import ru.geekbrains.closeapp.model.GithubUser
-import ru.geekbrains.closeapp.repository.impl.GithubRepositoryImpl
+import ru.geekbrains.closeapp.repository.impl.GithubUserRepositoryImpl
 
 class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
@@ -28,7 +28,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
     private val presenter : UserPresenter by moxyPresenter {
         UserPresenter(
-            GithubRepositoryImpl(NetworkProvider.usersApi),
+            GithubUserRepositoryImpl(NetworkProvider.usersApi, GeekBrainsApp.instance.database.UserDao(), GeekBrainsApp.instance.getConnectStatus()),
             GeekBrainsApp.instance.router
         )
     }
