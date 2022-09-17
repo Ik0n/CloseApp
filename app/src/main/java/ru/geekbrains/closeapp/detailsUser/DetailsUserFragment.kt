@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.geekbrains.closeapp.ARG_LOGIN
 import ru.geekbrains.closeapp.GITHUB_USER
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.R
@@ -32,8 +33,6 @@ import ru.geekbrains.closeapp.user.UserAdapter
 class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPressedListener {
 
     companion object {
-        private const val ARG_LOGIN = "ARG_LOGIN"
-
         fun getInstance(login : String) : DetailsUserFragment {
             return DetailsUserFragment().apply {
                 arguments = Bundle().apply {

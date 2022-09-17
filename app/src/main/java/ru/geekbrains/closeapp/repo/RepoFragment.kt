@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.geekbrains.closeapp.ARG_LOGIN
+import ru.geekbrains.closeapp.ARG_REPO_NAME
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.core.OnBackPressedListener
 import ru.geekbrains.closeapp.core.network.NetworkProvider
@@ -21,8 +23,6 @@ import ru.geekbrains.closeapp.repository.impl.GithubRepositoryImpl
 class RepoFragment : MvpAppCompatFragment(), RepoView, OnBackPressedListener {
 
     companion object {
-        private const val ARG_LOGIN = "ARG_LOGIN"
-        private const val ARG_REPO_NAME = "ARG_REPO_NAME"
 
         fun getInstance(login : String, name : String) : RepoFragment {
             return RepoFragment().apply {
