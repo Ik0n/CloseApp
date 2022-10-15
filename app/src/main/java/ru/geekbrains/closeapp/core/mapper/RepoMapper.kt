@@ -1,9 +1,7 @@
 package ru.geekbrains.closeapp.core.mapper
 
 import ru.geekbrains.closeapp.core.database.RepoDBObject
-import ru.geekbrains.closeapp.core.database.UserWithReposDBObject
 import ru.geekbrains.closeapp.core.network.RepoDto
-import ru.geekbrains.closeapp.model.GithubUser
 import ru.geekbrains.closeapp.model.Repo
 
 object RepoMapper {

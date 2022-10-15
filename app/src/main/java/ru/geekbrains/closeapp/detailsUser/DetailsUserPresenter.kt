@@ -8,12 +8,13 @@ import ru.geekbrains.closeapp.core.utils.disposeBy
 import ru.geekbrains.closeapp.core.utils.subscribeByDefault
 import ru.geekbrains.closeapp.repository.GithubRepoRepository
 import ru.geekbrains.closeapp.repository.GithubRepository
+import javax.inject.Inject
 
-class DetailsUserPresenter(
-    private val githubRepository: GithubRepository,
-    private val repoRepository: GithubRepoRepository,
-    private val router: Router
-) : MvpPresenter<DetailsUserView>() {
+class DetailsUserPresenter() : MvpPresenter<DetailsUserView>() {
+
+    @Inject lateinit var githubRepository: GithubRepository
+    @Inject lateinit var repoRepository: GithubRepoRepository
+    @Inject lateinit var router: Router
 
     private val bag = CompositeDisposable()
 

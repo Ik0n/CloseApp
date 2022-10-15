@@ -7,11 +7,12 @@ import moxy.MvpPresenter
 import ru.geekbrains.closeapp.core.utils.disposeBy
 import ru.geekbrains.closeapp.core.utils.subscribeByDefault
 import ru.geekbrains.closeapp.repository.GithubRepoRepository
+import javax.inject.Inject
 
-class RepoPresenter(
-    private val repoRepository: GithubRepoRepository,
-    private val router: Router
-) : MvpPresenter<RepoView>() {
+class RepoPresenter() : MvpPresenter<RepoView>() {
+
+    @Inject lateinit var repoRepository: GithubRepoRepository
+    @Inject lateinit var router: Router
 
     private val bag = CompositeDisposable()
 

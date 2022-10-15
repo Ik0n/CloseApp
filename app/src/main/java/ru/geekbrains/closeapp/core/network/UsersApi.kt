@@ -3,7 +3,6 @@ package ru.geekbrains.closeapp.core.network
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
-import ru.geekbrains.closeapp.model.GithubUser
 
 interface UsersApi {
 

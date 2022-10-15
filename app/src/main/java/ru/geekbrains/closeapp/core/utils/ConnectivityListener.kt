@@ -6,7 +6,6 @@ import android.net.NetworkRequest
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.*
 
 class ConnectivityListener(connectivityManager: ConnectivityManager) {
 

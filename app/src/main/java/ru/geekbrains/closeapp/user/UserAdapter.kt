@@ -2,12 +2,8 @@ package ru.geekbrains.closeapp.user
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import ru.geekbrains.closeapp.R
 import ru.geekbrains.closeapp.core.utils.loadImage
 import ru.geekbrains.closeapp.databinding.ItemUserBinding
 import ru.geekbrains.closeapp.model.GithubUser

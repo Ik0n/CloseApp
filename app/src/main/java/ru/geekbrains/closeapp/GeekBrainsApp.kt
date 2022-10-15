@@ -3,13 +3,9 @@ package ru.geekbrains.closeapp
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.exceptions.UndeliverableException
-import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import ru.geekbrains.closeapp.core.database.GithubAppDatabase
 import ru.geekbrains.closeapp.core.utils.ConnectivityListener
+import ru.geekbrains.closeapp.di.*
 
 class GeekBrainsApp : Application() {
 
@@ -17,10 +13,7 @@ class GeekBrainsApp : Application() {
         lateinit var instance : GeekBrainsApp
     }
 
-    private val cicerone : Cicerone<Router> by lazy { Cicerone.create() }
-
-    val navigationHolder = cicerone.getNavigatorHolder()
-    val router = cicerone.router
+    lateinit var appComponent : AppComponent
 
     val database by lazy {
         GithubAppDatabase.create(this)
@@ -36,13 +29,15 @@ class GeekBrainsApp : Application() {
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         )
 
-        RxJavaPlugins.setErrorHandler {
-            if (it is UndeliverableException) {
-                Log.e("1", it.message.toString())
-            }
-        }
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(applicationContext))
+            .apiModule(ApiModule)
+            .repoApiModule(RepoApiModule)
+            .databaseModule(DatabaseModule)
+            .ciceroneModule(CiceroneModule)
+            .repoModule(RepoModule)
+            .repositoryRepoModule(RepositoryRepoModule)
+            .build()
     }
 
-    fun getConnectObservable() = connectivityListener.status()
-    fun getConnectStatus() = connectivityListener.statusSingle()
 }

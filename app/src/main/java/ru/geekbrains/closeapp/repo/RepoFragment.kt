@@ -11,10 +11,8 @@ import ru.geekbrains.closeapp.ARG_LOGIN
 import ru.geekbrains.closeapp.ARG_REPO_NAME
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.core.OnBackPressedListener
-import ru.geekbrains.closeapp.core.network.NetworkProvider
 import ru.geekbrains.closeapp.databinding.FragmentDetailsRepoBinding
 import ru.geekbrains.closeapp.model.Repo
-import ru.geekbrains.closeapp.repository.impl.GithubRepoRepositoryImpl
 
 class RepoFragment : MvpAppCompatFragment(), RepoView, OnBackPressedListener {
 
@@ -33,10 +31,14 @@ class RepoFragment : MvpAppCompatFragment(), RepoView, OnBackPressedListener {
     private var viewBinding: FragmentDetailsRepoBinding? = null
 
     private val presenter : RepoPresenter by moxyPresenter {
-        RepoPresenter(
-            GithubRepoRepositoryImpl(NetworkProvider.reposApi),
-            GeekBrainsApp.instance.router
-        )
+        RepoPresenter().apply {
+            GeekBrainsApp.instance.appComponent.inject(this)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        GeekBrainsApp.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(

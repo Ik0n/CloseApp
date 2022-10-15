@@ -2,7 +2,6 @@ package ru.geekbrains.closeapp.repository.impl
 
 import io.reactivex.rxjava3.core.Single
 import ru.geekbrains.closeapp.core.database.UserDAO
-import ru.geekbrains.closeapp.core.database.UserWithReposDBObject
 import ru.geekbrains.closeapp.core.mapper.RepoMapper
 import ru.geekbrains.closeapp.core.mapper.UserMapper
 import ru.geekbrains.closeapp.core.network.UsersApi
@@ -16,13 +15,7 @@ class GithubUserRepositoryImpl constructor(
     private val networkStatus : Single<Boolean>
 ) : GithubRepository {
     override fun getUsers(): Single<List<GithubUser>> {
-        return networkStatus.flatMap { hasConnection ->
-            if (hasConnection) {
-                fetchFromApi(true)
-            } else {
-                getFromDatabase()
-            }
-        }
+        return fetchFromApi(true)
     }
 
     private fun fetchFromApi(shouldPersist: Boolean) : Single<List<GithubUser>> {

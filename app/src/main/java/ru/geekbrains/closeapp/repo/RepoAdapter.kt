@@ -2,12 +2,9 @@ package ru.geekbrains.closeapp.repo
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.closeapp.databinding.ItemRepoBinding
-import ru.geekbrains.closeapp.databinding.ItemUserBinding
-import ru.geekbrains.closeapp.model.GithubUser
 import ru.geekbrains.closeapp.model.Repo
 
 typealias OnItemViewClick = (login: String,name: String) -> Unit

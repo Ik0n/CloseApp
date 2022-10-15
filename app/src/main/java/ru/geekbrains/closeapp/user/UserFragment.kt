@@ -10,12 +10,10 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.core.OnBackPressedListener
-import ru.geekbrains.closeapp.core.network.NetworkProvider
 import ru.geekbrains.closeapp.core.utils.makeGone
 import ru.geekbrains.closeapp.core.utils.makeVisible
 import ru.geekbrains.closeapp.databinding.FragmentUserListBinding
 import ru.geekbrains.closeapp.model.GithubUser
-import ru.geekbrains.closeapp.repository.impl.GithubUserRepositoryImpl
 
 class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
@@ -27,13 +25,17 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
     private lateinit var viewBinding: FragmentUserListBinding
 
     private val presenter : UserPresenter by moxyPresenter {
-        UserPresenter(
-            GithubUserRepositoryImpl(NetworkProvider.usersApi, GeekBrainsApp.instance.database.UserDao(), GeekBrainsApp.instance.getConnectStatus()),
-            GeekBrainsApp.instance.router
-        )
+        UserPresenter().apply {
+            GeekBrainsApp.instance.appComponent.inject(this)
+        }
     }
     private val adapter : UserAdapter by lazy {
         UserAdapter(presenter::openDetailsUser)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        GeekBrainsApp.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(

@@ -77,4 +77,8 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     annotationProcessor 'com.github.moxy-community:moxy-compiler:2.2.2'
 
+    // Dagger 2
+    implementation 'com.google.dagger:dagger:2.24'
+    kapt 'com.google.dagger:dagger-compiler:2.24'
+
 }

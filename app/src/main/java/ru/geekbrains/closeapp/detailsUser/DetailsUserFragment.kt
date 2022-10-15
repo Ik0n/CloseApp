@@ -13,10 +13,6 @@ import ru.geekbrains.closeapp.ARG_LOGIN
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.R
 import ru.geekbrains.closeapp.core.OnBackPressedListener
-import ru.geekbrains.closeapp.core.database.GithubAppDatabase
-import ru.geekbrains.closeapp.core.database.GithubAppDatabase_Impl
-import ru.geekbrains.closeapp.core.database.UserDAO
-import ru.geekbrains.closeapp.core.network.NetworkProvider
 import ru.geekbrains.closeapp.core.utils.loadImage
 import ru.geekbrains.closeapp.core.utils.makeGone
 import ru.geekbrains.closeapp.core.utils.makeVisible
@@ -24,8 +20,6 @@ import ru.geekbrains.closeapp.databinding.FragmentDetailsUserBinding
 import ru.geekbrains.closeapp.model.GithubUser
 import ru.geekbrains.closeapp.model.Repo
 import ru.geekbrains.closeapp.repo.RepoAdapter
-import ru.geekbrains.closeapp.repository.impl.GithubRepoRepositoryImpl
-import ru.geekbrains.closeapp.repository.impl.GithubUserRepositoryImpl
 
 
 class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPressedListener {
@@ -43,15 +37,18 @@ class DetailsUserFragment : MvpAppCompatFragment(), DetailsUserView, OnBackPress
     private var viewBinding: FragmentDetailsUserBinding? = null
 
     private val presenter : DetailsUserPresenter by moxyPresenter {
-        DetailsUserPresenter(
-            GithubUserRepositoryImpl(NetworkProvider.usersApi, GeekBrainsApp.instance.database.UserDao(), GeekBrainsApp.instance.getConnectStatus()),
-            GithubRepoRepositoryImpl(NetworkProvider.reposApi),
-            GeekBrainsApp.instance.router
-        )
+        DetailsUserPresenter().apply {
+            GeekBrainsApp.instance.appComponent.inject(this)
+        }
     }
 
     private val repoAdapter : RepoAdapter by lazy {
         RepoAdapter(presenter::openRepo)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        GeekBrainsApp.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
