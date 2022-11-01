@@ -1,14 +1,9 @@
-package ru.geekbrains.closeapp.model
+package ru.geekbrains.closeapp.core.network
 
-import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
-import ru.geekbrains.closeapp.core.network.RepoDto
 
-@Parcelize
-data class GithubUser (
+data class UserDto(
     @Expose
     @SerializedName("id")
     val id: Int,
@@ -18,4 +13,4 @@ data class GithubUser (
     @Expose
     @SerializedName("avatar_url")
     val avatarUrl: String
-) : Parcelable
+)

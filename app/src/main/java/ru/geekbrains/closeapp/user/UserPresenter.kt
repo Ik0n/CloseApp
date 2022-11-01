@@ -3,6 +3,7 @@ package ru.geekbrains.closeapp.user
 import android.widget.Toast
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.geekbrains.closeapp.GeekBrainsApp
 import ru.geekbrains.closeapp.core.nav.DetailsUserScreen
@@ -20,7 +21,9 @@ class UserPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.showLoading()
-        repository.getUsers().delay(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        repository.getUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     viewState.initList(it)
@@ -32,9 +35,9 @@ class UserPresenter(
             )
     }
 
-    fun openDetailsUser(user: GithubUser) {
-        router.navigateTo(DetailsUserScreen(user))
-        Toast.makeText(GeekBrainsApp.instance, user.login, Toast.LENGTH_SHORT).show()
+    fun openDetailsUser(login: String) {
+        router.navigateTo(DetailsUserScreen(login))
+        Toast.makeText(GeekBrainsApp.instance, login, Toast.LENGTH_SHORT).show()
     }
 
     fun onBackPressed() : Boolean {
